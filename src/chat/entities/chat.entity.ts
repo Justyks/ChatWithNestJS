@@ -3,7 +3,8 @@ import {Column, DataType, Model, Table} from 'sequelize-typescript';
 
    interface MessageCreationAttrs{
     login: string;
-    password: string;
+    text: string;
+    recipient: string;
 }
 @Table({tableName: 'messages'})
 export class Message extends Model<Message, MessageCreationAttrs>{
@@ -18,4 +19,8 @@ export class Message extends Model<Message, MessageCreationAttrs>{
     @ApiProperty({example: 'hello', description: 'Текст сообщения'})
     @Column({type: DataType.STRING, allowNull: false})
     text: string;
+ 
+    @ApiProperty({example: 'qwe1', description: 'Логин получателя'})
+    @Column({type: DataType.STRING, allowNull: false})
+    recipient: string;
 }

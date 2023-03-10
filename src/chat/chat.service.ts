@@ -11,8 +11,11 @@ export class ChatService {
         return await this.chatRepository.create(payload);
     }
 
-    async getMessagesWithUser(loginOfCompanion: string, user?: string){
-        user = "he";
-        return await this.chatRepository.findAll({where:{[Op.or]: [{login: loginOfCompanion}, {login: user}]}}); 
+    async getMessagesWithUser(loginOfCompanion: string, user: string){
+        return await this.chatRepository.findAll({where:{
+            [Op.or]: [
+                {[Op.and]: [{login: loginOfCompanion}, {recipient: user}]}, 
+                {[Op.and]: [{login: user}, {recipient: loginOfCompanion}]}
+    ]}}); 
     }
 }

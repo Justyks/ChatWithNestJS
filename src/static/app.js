@@ -41,10 +41,10 @@ function loadDate(data) {
 //socket.io
 //Создаём событие sendMessage, чтобы передать сообщение
 function sendMessage(message) {
- socket.emit('msgToServer', message);
+ socket.emit('msgToServer', message);//Название такое оставь
 }
 //Слушаем событие recMessage, чтобы получать сообщения, отправленные пользователями
-socket.on('msgToClient', (message) => {
+socket.on('msgToClient', (message) => {// Назавние такое оставь
  messages.push(message);
  loadDate(messages);
 })

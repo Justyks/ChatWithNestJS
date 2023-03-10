@@ -30,9 +30,11 @@ export class AuthService {
 
     private async validateUser(dto: CreateUserDto){
         const user = await this.userService.getUserByLogin(dto.login);
-        const passwordMatch = await bcrypt.compare(dto.password, user.password);
-        if(user && passwordMatch){
-            return user;
+        if(user){
+            const passwordMatch = await bcrypt.compare(dto.password, user.password);
+            if(passwordMatch){
+                return user;
+            }
         }
         throw new UnauthorizedException({message: "Данные неверны"});
     }
