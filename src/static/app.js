@@ -1,12 +1,18 @@
 const socket = io('http://localhost:5000');
 const msgBox = document.getElementById('exampleFormControlTextarea1');
 const msgCont = document.getElementById('data-container');
-const login = document.getElementById('email');
-console.log(document.referrer);
+const login = document.getElementById('login');
+
+var strGET = window.location.search.replace( '?', '').reduce((params, e) => {
+  let arr = e.split('=');
+  p[ decodeURIComponent(a[0])] = decodeURIComponent (a[1]);
+  return params;
+}); //Получение GET параметра, не тестил работает ли это получение, только тебе для примера написал, но вроде как должно работать
+
 //Получаем старые сообщения с сервера
 const messages = [];
 function getMessages() {
- fetch('http://localhost:5000/chat/dialog/:login')//Здесь надо будет сделать замену логина
+ fetch('http://localhost:5000/chat/dialog')
    .then((response) => response.json())
    .then((data) => {
      loadDate(data);
@@ -21,7 +27,7 @@ getMessages();
 //Когда пользователь нажимает клавишу enter key, отправляем сообщение.
 msgBox.addEventListener('keydown', (e) => {
  if (e.keyCode === 13) {
-   sendMessage({ login: login.value, text: e.target.value });
+   sendMessage({ login: login.value, text: e.target.value, recipient: strGET['login']});
    e.target.value = '';
  }
 });
