@@ -25,6 +25,10 @@ export class AppGateway
    this.server.emit('msgToClient', payload);
  }
  
+ @SubscribeMessage('joinRoom')
+ joinRoom(roomId, userId){
+  console.log(roomId, userId);
+ }
  afterInit(server: Server) {
    //console.log(server);
    //Выполняем действия

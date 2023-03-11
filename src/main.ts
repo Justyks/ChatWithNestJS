@@ -5,14 +5,20 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as cookieParser from 'cookie-parser';
+import fs from 'fs';
+import https from 'https'
 
 async function start() {
     const PORT = process.env.PORT || 5000;
+    // const httpsOptions = {
+    //     key: fs.readFileSync('./secrets/private-key.pem'),
+    //     cert: fs.readFileSync('./secrets/public-certificate.pem'),
+    //   };
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
     const config = new DocumentBuilder()
         .setTitle('Чат')
-        .setDescription('Документация REST API')
+        .setDescription('Документация')
         .setVersion('1.0.0')
         .build();
     const document = SwaggerModule.createDocument(app, config);

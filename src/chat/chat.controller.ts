@@ -3,8 +3,10 @@ import { JwtService } from '@nestjs/jwt/dist';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { ChatService } from './chat.service';
 import { Controller, Get, Param, Query, Render, Req, Res, UseGuards } from '@nestjs/common';
-import { query, Request } from 'express';
+import { query, Request , Response} from 'express';
 import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import uuid = require('uuid');
+import io = require("socket.io")
 
 @ApiTags('Чат')
 @Controller('chat')
@@ -25,5 +27,21 @@ export class ChatController {
             return;
         }
         res.send("Chat opened select user to chat with");
+    }
+
+    @ApiOperation({summary: 'Переход в звонок, тебе надо будет ссылаться сюда'})
+    //@ApiResponse({status: 200, type: Message, description: "Возвращается JSON с сообщениями"})
+    //@UseGuards(JwtAuthGuard)
+    @Get('/call/')
+    async getRoom(@Res() res: Response, @Req() req: Request){
+        res.redirect(`call/${uuid.v4()}`)
+    }
+
+    @ApiOperation({summary: 'Звонок'})
+    //@ApiResponse({status: 200, type: Message, description: "Возвращается JSON с сообщениями"})
+    //@UseGuards(JwtAuthGuard)
+    @Get('/call/:room')
+    async callUser(@Res() res: Response, @Req() req: Request){
+        res.render('room', {roomId: req.params.room});
     }
 }
