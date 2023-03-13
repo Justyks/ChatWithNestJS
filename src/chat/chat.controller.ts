@@ -42,6 +42,6 @@ export class ChatController {
     //@UseGuards(JwtAuthGuard)
     @Get('/call/:room')
     async callUser(@Res() res: Response, @Req() req: Request){
-        res.render('room', {roomId: req.params.room});
+        res.render('room', {roomId: req.params.room, userLogin: req.cookies['login']});
     }
 }
