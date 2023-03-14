@@ -29,7 +29,7 @@ export class ChatController {
         res.send("Chat opened select user to chat with");
     }
 
-    @ApiOperation({summary: 'Переход в звонок, тебе надо будет ссылаться сюда'})
+    @ApiOperation({summary: 'Переход в звонок, тебе надо будет ссылаться сюда, это наверное не нужно'})
     //@ApiResponse({status: 200, type: Message, description: "Возвращается JSON с сообщениями"})
     //@UseGuards(JwtAuthGuard)
     @Get('/call/')
@@ -40,8 +40,8 @@ export class ChatController {
     @ApiOperation({summary: 'Звонок'})
     //@ApiResponse({status: 200, type: Message, description: "Возвращается JSON с сообщениями"})
     //@UseGuards(JwtAuthGuard)
-    @Get('/call/:room')
+    @Get('/call/:login')
     async callUser(@Res() res: Response, @Req() req: Request){
-        res.render('room', {roomId: req.params.room, userLogin: req.cookies['login']});
+        res.render('room', {roomId: req.params.login, userLogin: req.cookies['login']});
     }
 }

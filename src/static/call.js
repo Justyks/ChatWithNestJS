@@ -10,7 +10,7 @@ myVideo.muted = true;
 
 
 navigator.mediaDevices.getUserMedia({
-    video: true,
+    video: true, // Тут можно тру фолс ставить, для реализации аудио и видеозвокнов
     audio: false // Тут потом звук размуть, а то у меня чуть уши не вытекли))
 }).then(stream => {
     addVideoStream(myVideo, stream);
@@ -21,14 +21,14 @@ navigator.mediaDevices.getUserMedia({
 
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream);
-        })
+        })  
     })
 
     socket.on('userConnected', userId => {
         connectToNewUser(userId, stream);
     })
 });
-
+ 
 socket.on('userDisconnected', userId => {
     //if(peers[userId]){
         console.log(peers);
@@ -51,6 +51,7 @@ function addVideoStream(video, stream){ //Добавление видео
 }
 
 function connectToNewUser(userId, stream){
+    console.log('connected');
     const call = myPeer.call(userId, stream);// Это функция вызова, тут они автоматически коннектятся по переходу по ссылке
     const video = document.createElement('video');
 
@@ -59,7 +60,7 @@ function connectToNewUser(userId, stream){
     })
 
     call.on('close', () => {
-        console.log('disconnect');
+        myPeer.destroy(); // Выход из вызова и закрытие соеденения, я сделал только для двух, то есть один выходит и комната закрывается
         video.remove();
     });
 
