@@ -16,9 +16,8 @@ export class ChatController {
         private userService: UsersService,
         private jwtService: JwtService) { }
 
-    @ApiOperation({ summary: 'Открытие чата с каким-то юзером, здесь надо параметром передать логин юзера' })
-    @ApiQuery({ example: "?login=vlad", description: "GET параметр отправителя, если его нет возвращается информационное сообщение" })
-    @ApiResponse({ status: 200, type: Message, description: "Возвращается JSON с сообщениями" })
+    @ApiOperation({ summary: 'Открытие списка диалогов' })
+    @ApiResponse({ status: 200, type: Message, description: "Возвращется список юзеров" })
     @UseGuards(JwtAuthGuard)
     @Get('/dialogs/')
     async viewChats(@Res() res, @Req() req: Request) {
