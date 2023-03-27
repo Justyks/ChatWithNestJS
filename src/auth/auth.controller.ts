@@ -16,7 +16,7 @@ export class AuthController {
     //@ApiHeader({name: 'Authorization', description: "Тут токен должен быть"})
     @UsePipes(ValidationPipe)
     @Post('signup')
-    @Redirect('chat/dialogs')
+    @Redirect('/chat/dialogs')
     signUp(@Body() dto: CreateUserDto, @Res({ passthrough: true }) response: Response){
         response.cookie('login', dto.login);
         return this.authService.signUp(dto);
@@ -26,7 +26,7 @@ export class AuthController {
     @ApiResponse({status: 200, type: Object, description: "Возвращается JWT токен, тебе его надо сохранить куда-нибудь и дальше по сайту передавать его в хэдере 'Authorization', потому что дальше без него никуда не пустит"})
     @UsePipes(ValidationPipe)
     @Post('signin')
-    @Redirect('chat/dialogs')
+    @Redirect('/chat/dialogs')
     signIn(@Body() dto: CreateUserDto, @Res({ passthrough: true }) response: Response){
         response.cookie('login', dto.login);
         return this.authService.signIn(dto);

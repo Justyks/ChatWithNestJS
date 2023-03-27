@@ -10,7 +10,8 @@ import { AuthModule } from 'src/auth/auth.module';
     controllers: [ChatController],
     providers: [ChatService],
     imports: [SequelizeModule.forFeature([Message]),
-                AuthModule],
+                AuthModule,
+                UsersModule],
     exports: [ChatService]
 })
 export class ChatModule {
