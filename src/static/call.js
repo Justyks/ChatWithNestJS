@@ -30,11 +30,12 @@ navigator.mediaDevices.getUserMedia({
 });
  
 socket.on('userDisconnected', userId => {
+    myPeer.destroy(); // Выход из вызова и закрытие соеденения, я сделал только для двух, то есть один выходит и комната закрывается
     //if(peers[userId]){
-        console.log(peers);
-        console.log(userId);
-        console.log(peers[userId]);
-        peers[userId].close()
+    //     console.log(peers);
+    //     console.log(userId);
+    //     console.log(peers[userId]);
+    //     peers[userId].close()
     //}
 });
 
@@ -60,7 +61,6 @@ function connectToNewUser(userId, stream){
     })
 
     call.on('close', () => {
-        myPeer.destroy(); // Выход из вызова и закрытие соеденения, я сделал только для двух, то есть один выходит и комната закрывается
         video.remove();
     });
 

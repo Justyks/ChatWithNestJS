@@ -1,5 +1,5 @@
 import { ValidationPipe } from 'src/pipes/validation-pipe';
-import { Body, Controller, Post, Res, UsePipes } from '@nestjs/common';
+import { Body, Controller, Post, Redirect, Res, UsePipes } from '@nestjs/common';
 import { ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/users/dto/createUser.dto';
 import { User } from 'src/users/users.model';
@@ -16,6 +16,7 @@ export class AuthController {
     //@ApiHeader({name: 'Authorization', description: "Тут токен должен быть"})
     @UsePipes(ValidationPipe)
     @Post('signup')
+    @Redirect('chat')
     signUp(@Body() dto: CreateUserDto, @Res({ passthrough: true }) response: Response){
         response.cookie('login', dto.login);
         return this.authService.signUp(dto);
@@ -25,6 +26,7 @@ export class AuthController {
     @ApiResponse({status: 200, type: Object, description: "Возвращается JWT токен, тебе его надо сохранить куда-нибудь и дальше по сайту передавать его в хэдере 'Authorization', потому что дальше без него никуда не пустит"})
     @UsePipes(ValidationPipe)
     @Post('signin')
+    @Redirect('chat')
     signIn(@Body() dto: CreateUserDto, @Res({ passthrough: true }) response: Response){
         response.cookie('login', dto.login);
         return this.authService.signIn(dto);

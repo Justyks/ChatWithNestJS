@@ -27,6 +27,7 @@ export class AppGateway
 
     @SubscribeMessage('joinRoom')
     joinRoom(client: Socket, payload) {
+        console.log(payload);
         client.join(payload[0]);
         client.to(payload[0]).emit('userConnected', payload[1]);
 
