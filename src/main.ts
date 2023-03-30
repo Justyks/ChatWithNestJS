@@ -6,7 +6,8 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as cookieParser from 'cookie-parser';
 import fs from 'fs';
-import https from 'https'
+import https from 'https';
+
 
 async function start() {
     const PORT = process.env.PORT || 5000;
@@ -15,6 +16,7 @@ async function start() {
     //     cert: fs.readFileSync('./secrets/public-certificate.pem'),
     //   };
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
+    app.enableCors();
 
     const config = new DocumentBuilder()
         .setTitle('Чат')
