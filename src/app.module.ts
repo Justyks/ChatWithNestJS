@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './users/users.model';
@@ -8,6 +8,7 @@ import { AppGateway } from './app/app.gateway';
 import { ChatService } from './chat/chat.service';
 import { Message } from './chat/entities/chat.entity';
 import { ChatModule } from './chat/chat.module';
+import * as cors from 'cors'
 
 @Module({
   imports: [ConfigModule.forRoot
@@ -28,4 +29,8 @@ import { ChatModule } from './chat/chat.module';
   controllers: [],
   providers: [AppGateway],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer){
+    consumer.apply(cors()).forRoutes('*');
+  }
+}
