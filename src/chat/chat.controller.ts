@@ -39,17 +39,11 @@ export class ChatController {
         res.send("Chat opened select user to chat with");
     }
 
-    @ApiOperation({ summary: 'Переход в звонок, тебе надо будет ссылаться сюда, это наверное не нужно' })
-    @UseGuards(JwtAuthGuard)
-    @Get('call')
-    async getRoom(@Res() res: Response, @Req() req: Request) {
-        res.redirect(`call/${uuid.v4()}`)
-    }
 
     @ApiOperation({ summary: 'Звонок' })
     @UseGuards(JwtAuthGuard)
     @Get('call/:login')
     async callUser(@Res() res: Response, @Req() req: Request) {
-        res.render('room', { roomId: req.params.login, userLogin: req.cookies['login'] });
+        res.json({ roomId: req.params.login, userLogin: req.cookies['login'] });
     }
 }
