@@ -16,7 +16,7 @@ async function start() {
     //     cert: fs.readFileSync('./secrets/public-certificate.pem'),
     //   };
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    app.enableCors();
+    app.enableCors({ origin: 'http://localhost:3000', credentials: true });
 
     const config = new DocumentBuilder()
         .setTitle('Чат')
@@ -26,7 +26,7 @@ async function start() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/docs', app, document);
     app.use(cookieParser());
-    app.useStaticAssets(join(__dirname, '..', 'src', 'static'));     
+    app.useStaticAssets(join(__dirname, '..', 'src', 'static'));
     app.setBaseViewsDir(join(__dirname, '..', 'src', 'views'));
     app.setViewEngine('ejs');
 

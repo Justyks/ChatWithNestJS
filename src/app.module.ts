@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './users/users.model';
@@ -29,8 +29,8 @@ import * as cors from 'cors'
   controllers: [],
   providers: [AppGateway],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer){
-    consumer.apply(cors()).forRoutes('*');
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(cors({ origin: "http://localhost:3000", credentials: true })).forRoutes("*");
   }
 }
