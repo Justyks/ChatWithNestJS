@@ -33,10 +33,9 @@ export class ChatController {
         if (req.query.login) {
             const userLogin = req.cookies['login'];
             const messages = await this.chatService.getMessagesWithUser(req.query.login.toString(), userLogin);
-            res.json(messages);
-            return;
+            return res.json(messages);;
         }
-        res.send("Chat opened select user to chat with");
+        // res.send("Chat opened select user to chat with");
     }
 
 
