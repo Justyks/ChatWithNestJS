@@ -16,22 +16,20 @@ import * as cors from "cors";
     cors: { origin: "http://localhost:3000", credentials: true },
 })
 export class AppGateway
-    implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
-    constructor(private chatService: ChatService) {}
+    implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+    constructor(private chatService: ChatService) { }
 
     @WebSocketServer()
     server: Server;
 
-    @SubscribeMessage("msgToServer")
+    @SubscribeMessage('msgToServer')
     async handleMessage(client: Socket, payload: Message): Promise<void> {
-        await this.chatService.createMessage(payload);
-        this.server.emit("msgToClient", payload);
+        await this.chatService.createMessage(payload); // сохраняем новое сообщение
+        client.broadcast.emit('msgToClient', payload); // отправляем сообщение всем подключенным клиентам
     }
 
     @SubscribeMessage("joinRoom")
     joinRoom(client: Socket, payload) {
-        console.log(payload);
         client.join(payload[0]);
         client.to(payload[0]).emit("userConnected", payload[1]);
 

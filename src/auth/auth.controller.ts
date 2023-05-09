@@ -26,7 +26,7 @@ export class AuthController {
     @UsePipes(ValidationPipe)
     @Post('signin')
     signIn(@Body() dto: CreateUserDto, @Res({ passthrough: true }) response: Response){
-        response.cookie('login', dto.login);
+        response.cookie('login', dto.login, {maxAge: 100000000});
         return this.authService.signIn(dto);
     }
 }
