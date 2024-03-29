@@ -1,4 +1,4 @@
-const socket = io('http://localhost:5000');
+const socket = io('https://192.168.224.20:3000');
 const videoGrid = document.getElementById('video-grid');
 const myPeer = new Peer(undefined, {
     host: '/',
@@ -21,14 +21,14 @@ navigator.mediaDevices.getUserMedia({
 
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream);
-        })  
+        })
     })
 
     socket.on('userConnected', userId => {
         connectToNewUser(userId, stream);
     })
 });
- 
+
 socket.on('userDisconnected', userId => {
     myPeer.destroy(); // Выход из вызова и закрытие соеденения, я сделал только для двух, то есть один выходит и комната закрывается
     //if(peers[userId]){
@@ -40,10 +40,10 @@ socket.on('userDisconnected', userId => {
 });
 
 myPeer.on('open', id => {
-    socket.emit('joinRoom', ROOM_ID , id);
+    socket.emit('joinRoom', ROOM_ID, id);
 });
 
-function addVideoStream(video, stream){ //Добавление видео
+function addVideoStream(video, stream) { //Добавление видео
     video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
         video.play();
@@ -51,7 +51,7 @@ function addVideoStream(video, stream){ //Добавление видео
     videoGrid.append(video);
 }
 
-function connectToNewUser(userId, stream){
+function connectToNewUser(userId, stream) {
     console.log('connected');
     const call = myPeer.call(userId, stream);// Это функция вызова, тут они автоматически коннектятся по переходу по ссылке
     const video = document.createElement('video');

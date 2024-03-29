@@ -11,26 +11,26 @@ import { ChatModule } from './chat/chat.module';
 import * as cors from 'cors'
 
 @Module({
-  imports: [ConfigModule.forRoot
-    ({envFilePath: `.${process.env.NODE_ENV}.env`}),
+    imports: [ConfigModule.forRoot
+        ({ envFilePath: `.${process.env.NODE_ENV}.env` }),
     SequelizeModule.forRoot({
-    dialect: 'postgres',
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
-    username: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
-    models: [User, Message],
-    autoLoadModels: true
-  }),
-    UsersModule,
-    AuthModule,
-    ChatModule],
-  controllers: [],
-  providers: [AppGateway],
+        dialect: 'postgres',
+        host: process.env.POSTGRES_HOST,
+        port: Number(process.env.POSTGRES_PORT),
+        username: process.env.POSTGRES_USER,
+        password: process.env.POSTGRES_PASSWORD,
+        database: process.env.POSTGRES_DB,
+        models: [User, Message],
+        autoLoadModels: true
+    }),
+        UsersModule,
+        AuthModule,
+        ChatModule],
+    controllers: [],
+    providers: [AppGateway],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(cors({ origin: "http://localhost:3000", credentials: true }));
-  }
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(cors({ origin: "http://localhost:3000", credentials: true }));
+    }
 }
